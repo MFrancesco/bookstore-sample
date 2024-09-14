@@ -1,6 +1,7 @@
 package com.github.mfrancesco.bookstore.controller;
 import com.github.mfrancesco.bookstore.models.db.Book;
 import com.github.mfrancesco.bookstore.models.dto.BookCreateDTO;
+import com.github.mfrancesco.bookstore.models.dto.BookDTO;
 import com.github.mfrancesco.bookstore.service.BookService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
@@ -24,12 +25,12 @@ public class BookController {
   }
 
   @GetMapping
-  public ResponseEntity<List<Book>> getAllBooks() {
+  public ResponseEntity<List<BookDTO>> getAllBooks() {
     return ResponseEntity.ok(bookService.getAllBooks());
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Book> getBookById(@PathVariable Long id) {
+  public ResponseEntity<BookDTO> getBookById(@PathVariable Long id) {
     return ResponseEntity.ok(bookService.getBookById(id));
   }
 
@@ -46,7 +47,7 @@ public class BookController {
 
   @Valid
   @GetMapping("/low-stocked")
-  public ResponseEntity<List<Book>> getBooksWithLowStock(@RequestParam("threshold")
+  public ResponseEntity<List<BookDTO>> getBooksWithLowStock(@RequestParam("threshold")
   @Min(value = 1, message = "Threshold must be greater than 0")
   @Max(value = Integer.MAX_VALUE, message = "Threshold must be less or equal than "+Integer.MAX_VALUE) int stock) {
     return ResponseEntity.ok(bookService.findBookWithQuantityStockLessThanThreshold(stock));

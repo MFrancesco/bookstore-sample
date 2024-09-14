@@ -24,11 +24,11 @@ public class Book {
   @Column(nullable = false)
   private int quantitySold;
 
-  @ManyToOne(optional = false)
+  @ManyToOne(optional = false, fetch = FetchType.LAZY)
   @JoinColumn(name = "author_id", nullable = false)
   private Author author;
 
-  @ManyToOne(optional = false)
+  @ManyToOne(optional = false, fetch = FetchType.LAZY)
   @JoinColumn(name = "publisher_id", nullable = false)
   private Publisher publisher;
 

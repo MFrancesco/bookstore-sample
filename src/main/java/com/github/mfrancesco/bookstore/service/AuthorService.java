@@ -2,6 +2,7 @@ package com.github.mfrancesco.bookstore.service;
 
 import com.github.mfrancesco.bookstore.models.db.Author;
 import com.github.mfrancesco.bookstore.models.dto.AuthorCreateDTO;
+import com.github.mfrancesco.bookstore.models.dto.AuthorDTO;
 import com.github.mfrancesco.bookstore.models.dto.RankedAuthorDTO;
 import com.github.mfrancesco.bookstore.repository.AuthorRepository;
 import java.util.List;
@@ -18,8 +19,8 @@ public class AuthorService {
     this.authorRepository = authorRepository;
   }
 
-  public Author createAuthor(AuthorCreateDTO authorCreateDTO) {
-    return authorRepository.save(new Author(authorCreateDTO.name, authorCreateDTO.biography.orElse("")));
+  public AuthorDTO createAuthor(AuthorCreateDTO authorCreateDTO) {
+    return AuthorDTO.FromAuthor(authorRepository.save(new Author(authorCreateDTO.name, authorCreateDTO.biography.orElse(""))));
   }
 
   public List<RankedAuthorDTO> getTopNRankedAuthor(Long n){

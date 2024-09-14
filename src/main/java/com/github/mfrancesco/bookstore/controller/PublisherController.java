@@ -1,9 +1,12 @@
 package com.github.mfrancesco.bookstore.controller;
 
 import com.github.mfrancesco.bookstore.models.db.Publisher;
+import com.github.mfrancesco.bookstore.models.dto.BookDTO;
 import com.github.mfrancesco.bookstore.models.dto.PublisherCreateDTO;
+import com.github.mfrancesco.bookstore.models.dto.PublisherDTO;
 import com.github.mfrancesco.bookstore.service.PublisherService;
 import jakarta.validation.Valid;
+import java.util.List;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,8 +28,12 @@ public class PublisherController {
   }
 
   @PostMapping
-  public ResponseEntity<Publisher> createPublisher(@Valid @RequestBody PublisherCreateDTO publisherCreateDTO) {
-    Publisher createdPublisher = publisherService.createPublisher(publisherCreateDTO);
-    return new ResponseEntity<>(createdPublisher, HttpStatus.CREATED);
+  public ResponseEntity<PublisherDTO> createPublisher(@Valid @RequestBody PublisherCreateDTO publisherCreateDTO) {
+    return new ResponseEntity<>(PublisherDTO.FromPublisher(publisherService.createPublisher(publisherCreateDTO)), HttpStatus.CREATED);
+  }
+
+  @GetMapping
+  public ResponseEntity<List<PublisherDTO>> getAllPublishers() {
+    return ResponseEntity.ok(publisherService.getAllPublishers());
   }
 }

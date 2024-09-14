@@ -2,6 +2,7 @@ package com.github.mfrancesco.bookstore.controller;
 
 import com.github.mfrancesco.bookstore.models.db.Author;
 import com.github.mfrancesco.bookstore.models.dto.AuthorCreateDTO;
+import com.github.mfrancesco.bookstore.models.dto.AuthorDTO;
 import com.github.mfrancesco.bookstore.models.dto.RankedAuthorDTO;
 import com.github.mfrancesco.bookstore.service.AuthorService;
 import jakarta.validation.Valid;
@@ -31,9 +32,8 @@ public class AuthorController {
   }
 
   @PostMapping
-  public ResponseEntity<Author> createAuthor(@Validated @RequestBody AuthorCreateDTO authorCreateDTO) {
-    Author createdAuthor = authorService.createAuthor(authorCreateDTO);
-    return new ResponseEntity<>(createdAuthor, HttpStatus.CREATED);
+  public ResponseEntity<AuthorDTO> createAuthor(@Validated @RequestBody AuthorCreateDTO authorCreateDTO) {
+    return new ResponseEntity<>(authorService.createAuthor(authorCreateDTO), HttpStatus.CREATED);
   }
 
   @Valid

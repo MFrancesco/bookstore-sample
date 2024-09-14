@@ -4,6 +4,7 @@ import com.github.mfrancesco.bookstore.models.db.Author;
 import com.github.mfrancesco.bookstore.models.db.Book;
 import com.github.mfrancesco.bookstore.models.db.Publisher;
 import com.github.mfrancesco.bookstore.models.dto.BookCreateDTO;
+import com.github.mfrancesco.bookstore.models.dto.BookDTO;
 import com.github.mfrancesco.bookstore.repository.AuthorRepository;
 import com.github.mfrancesco.bookstore.repository.BookRepository;
 import com.github.mfrancesco.bookstore.repository.PublisherRepository;
@@ -27,12 +28,12 @@ public class BookService {
     this.authorRepository = authorRepository;
     this.publisherRepository = publisherRepository;
   }
-  public List<Book> getAllBooks() {
-    return bookRepository.findAll();
+  public List<BookDTO> getAllBooks() {
+    return bookRepository.findAll().stream().map(BookDTO::FromBook).toList();
   }
 
-  public Book getBookById(Long id) {
-    return bookRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
+  public BookDTO getBookById(Long id) {
+    return bookRepository.findById(id).map(BookDTO::FromBook).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
   }
 
   public Book createBook(BookCreateDTO dto) {
@@ -58,8 +59,8 @@ public class BookService {
     return bookRepository.save(book);
   }
 
-  public List<Book> findBookWithQuantityStockLessThanThreshold(int threshold){
-    return bookRepository.findBookWithQuantityStockLessThanThreshold(threshold);
+  public List<BookDTO> findBookWithQuantityStockLessThanThreshold(int threshold){
+    return bookRepository.findBookWithQuantityStockLessThanThreshold(threshold).stream().map(BookDTO::FromBook).toList();
   }
 
   public void deleteBook(Long id) {
