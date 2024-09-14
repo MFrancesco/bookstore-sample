@@ -18,6 +18,14 @@ public class Publisher {
   @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Book> books;
 
+  public Publisher() {
+  }
+
+  public Publisher(String name, String address) {
+    this.name = name;
+    this.address = address;
+  }
+
   public Long getId() {
     return id;
   }

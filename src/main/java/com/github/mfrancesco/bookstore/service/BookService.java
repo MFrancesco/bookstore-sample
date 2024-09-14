@@ -35,10 +35,6 @@ public class BookService {
     return bookRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found"));
   }
 
-  public List<Book> getBooksByAuthorName(String authorName) {
-    return bookRepository.findByAuthor_Name(authorName);
-  }
-
   public Book createBook(BookCreateDTO dto) {
     // Check if the author exists
     Author author = authorRepository.findById(dto.authorId)
@@ -62,8 +58,8 @@ public class BookService {
     return bookRepository.save(book);
   }
 
-  public List<Book> getBooksWithBelowThreshoold(int threshold){
-    return bookRepository.findBookWithQuantitySoldLessThanThreshold(threshold);
+  public List<Book> findBookWithQuantityStockLessThanThreshold(int threshold){
+    return bookRepository.findBookWithQuantityStockLessThanThreshold(threshold);
   }
 
   public void deleteBook(Long id) {

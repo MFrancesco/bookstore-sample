@@ -44,6 +44,11 @@ public class RankedAuthorDTO {
   public static RankedAuthorDTO fromInterface(Interface i){
     return new RankedAuthorDTO(i.getId(),i.getName(),i.getBookSold());
   }
+
+  /**
+   * Interface used to perform the tuple in the custom DTO using native query
+   * Not the most efficient, but the fastest to code, use other methods for production code
+   */
   public interface Interface{
     Long getId();
     String getName();

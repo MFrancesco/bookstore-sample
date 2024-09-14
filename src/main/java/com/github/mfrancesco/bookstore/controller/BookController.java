@@ -3,37 +3,53 @@ import com.github.mfrancesco.bookstore.models.db.Book;
 import com.github.mfrancesco.bookstore.models.dto.BookCreateDTO;
 import com.github.mfrancesco.bookstore.service.BookService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/books")
+@RequestMapping("/api/v1/books")
 public class BookController {
 
+  private final BookService bookService;
+
   @Autowired
-  private BookService bookService;
+  public BookController(BookService bookService) {
+    this.bookService = bookService;
+  }
 
   @GetMapping
-  public List<Book> getAllBooks() {
-    return bookService.getAllBooks();
+  public ResponseEntity<List<Book>> getAllBooks() {
+    return ResponseEntity.ok(bookService.getAllBooks());
   }
 
   @GetMapping("/{id}")
-  public Book getBookById(@PathVariable Long id) {
-    return bookService.getBookById(id);
+  public ResponseEntity<Book> getBookById(@PathVariable Long id) {
+    return ResponseEntity.ok(bookService.getBookById(id));
   }
 
   @PostMapping
-  public Book createBook(@RequestBody @Valid BookCreateDTO book) {
-    return bookService.createBook(book);
+  public ResponseEntity<Book> createBook(@RequestBody @Valid BookCreateDTO book) {
+    return new ResponseEntity<>(bookService.createBook(book), HttpStatus.CREATED);
   }
 
   @DeleteMapping("/{id}")
-  public void deleteBook(@PathVariable Long id) {
+  public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
     bookService.deleteBook(id);
+    return ResponseEntity.ok().build();
   }
 
-  // More methods can be added as required
+  @Valid
+  @GetMapping("/low-stocked")
+  public ResponseEntity<List<Book>> getBooksWithLowStock(@RequestParam("threshold")
+  @Min(value = 1, message = "Threshold must be greater than 0")
+  @Max(value = Integer.MAX_VALUE, message = "Threshold must be less or equal than "+Integer.MAX_VALUE) int stock) {
+    return ResponseEntity.ok(bookService.findBookWithQuantityStockLessThanThreshold(stock));
+  }
+
 }

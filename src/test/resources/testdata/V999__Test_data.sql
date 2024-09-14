@@ -1,6 +1,7 @@
 -- Sample Data for Authors
-INSERT INTO author (id, name, biography) VALUES (1, 'Author One', 'Biography of Author One');
-INSERT INTO author (id, name, biography) VALUES (2, 'Author Two', 'Biography of Author Two');
+INSERT INTO author (id, name, biography) VALUES (1, 'Author 1', 'Biography of Author 1');
+INSERT INTO author (id, name, biography) VALUES (2, 'Author 2', 'Biography of Author 2');
+INSERT INTO author (id, name, biography) VALUES (3, 'Author 3', 'Biography of Author 3');
 
 -- Sample Data for Publishers
 INSERT INTO publisher (id, name, address) VALUES (1, 'Publisher One', '123 Main St');

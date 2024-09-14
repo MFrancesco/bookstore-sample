@@ -7,17 +7,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface AuthorRepository extends JpaRepository<Author, Long> {
-  // You can add custom query methods if needed, for example:
-  Author findByName(String name);
-
   @Query(value = """
       SELECT
           a.id AS id,
           a.name AS name,
-          SUM(b.quantity_sold) AS book_sold
+          COALESCE(SUM(b.quantity_sold),0) AS book_sold
       FROM
           Author a
-      JOIN
+      LEFT JOIN
           Book b ON a.id = b.author_id
       GROUP BY
           a.id, a.name

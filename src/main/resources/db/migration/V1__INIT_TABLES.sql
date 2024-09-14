@@ -1,14 +1,14 @@
 CREATE TABLE author (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    biography TEXT
+    biography TEXT NOT NULL DEFAULT ''
 );
 
 
 CREATE TABLE publisher (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    address TEXT
+    address TEXT NOT NULL DEFAULT ''
 );
 
 CREATE TABLE book (
@@ -23,3 +23,5 @@ CREATE TABLE book (
     FOREIGN KEY (author_id) REFERENCES author(id) ON DELETE CASCADE,
     FOREIGN KEY (publisher_id) REFERENCES publisher(id) ON DELETE CASCADE
 );
+
+CREATE INDEX idx_quantity_in_stock ON book(quantity_in_stock);
