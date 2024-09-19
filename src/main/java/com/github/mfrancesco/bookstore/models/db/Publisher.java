@@ -15,7 +15,8 @@ public class Publisher {
   @Column(columnDefinition = "TEXT")
   private String address;
 
-  @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL,
+      orphanRemoval = true, fetch = FetchType.LAZY)
   private List<Book> books;
 
   public Publisher() {

@@ -14,7 +14,8 @@ public class Author {
   @Column(columnDefinition = "TEXT")
   private String biography;
 
-  @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(mappedBy = "author", cascade = CascadeType.ALL,
+      orphanRemoval = true, fetch = FetchType.LAZY)
   private List<Book> books;
 
   public Author() {

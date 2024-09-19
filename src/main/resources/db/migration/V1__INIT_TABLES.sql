@@ -25,3 +25,4 @@ CREATE TABLE book (
 );
 
 CREATE INDEX idx_quantity_in_stock ON book(quantity_in_stock);
+CREATE INDEX idx_book_author_quantity_sold ON Book (author_id, quantity_sold);

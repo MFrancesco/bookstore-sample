@@ -3,6 +3,12 @@ package com.github.mfrancesco.bookstore.models.db;
 import jakarta.persistence.*;
 
 @Entity
+@Table(
+    indexes = {
+        @Index(name = "idx_quantity_in_stock", columnList = "quantity_in_stock"),
+        @Index(name = "idx_book_author_quantity_sold", columnList = "author_id, quantity_sold")
+    }
+)
 public class Book {
 
   @Id

@@ -4,6 +4,7 @@ import com.github.mfrancesco.bookstore.models.db.Book;
 import com.github.mfrancesco.bookstore.models.dto.RankedAuthorDTO;
 import com.github.mfrancesco.bookstore.repository.AuthorRepository;
 import com.github.mfrancesco.bookstore.repository.BookRepository;
+import com.github.mfrancesco.bookstore.repository.PublisherRepository;
 import com.github.mfrancesco.bookstore.service.AuthorService;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -19,11 +20,13 @@ import org.springframework.test.context.ActiveProfiles;
  */
 @SpringBootTest
 @ActiveProfiles("test")
-class FrancescoApplicationTests {
+class BookstoreApplicationTest {
 
 
 	@Autowired
 	public BookRepository bookRepository;
+	@Autowired
+	public PublisherRepository publisherRepository;
 
 	@Autowired
 	public AuthorRepository authorRepository;
@@ -32,7 +35,10 @@ class FrancescoApplicationTests {
 	public AuthorService authorService;
 	@Test
 	void testDataHasBeenLoaded() {
+		Assertions.assertEquals(3,authorRepository.count(), "The test data has not been loaded correctly from flyway");
+		Assertions.assertEquals(2,publisherRepository.count(), "The test data has not been loaded correctly from flyway");
 		Assertions.assertEquals(20,bookRepository.count(), "The test data has not been loaded correctly from flyway");
+
 	}
 
 	@Test
